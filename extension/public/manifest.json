@@ -1,0 +1,24 @@
+{
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
+    "version": "3.9.2",
+    "default_locale": "en",
+    "offline_enabled": true,
+    "manifest_version": 2,
+    "permissions": ["storage"],
+    "web_accessible_resources": ["ui/images/icon-64.png"],
+    "icons": {
+        "16": "ui/images/app/icon-16.png",
+        "64": "ui/images/app/icon-64.png",
+        "128": "ui/images/app/icon-128.png"
+    },
+    "app": {
+        "launch": {
+            "local_path": "ui/html/homepage.html"
+        }
+    },
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": true
+    }
+}
