@@ -16,6 +16,7 @@ function update_time() {
             var year = now.getFullYear(), month = now.getMonth(), day = now.getDate(), hour = now.getHours();
         }
 
+        var atLeastOneRunning = false;
         // Go through the tasks array
         for(var i = 0; i < task_count; i++) {
             if(task_running[i]) {
@@ -93,12 +94,16 @@ function update_time() {
 
                 // Update task menu if it's shown for this task
                 if(displaying_task == i) task_info(i, false, progress);
+                atLeastOneRunning = true;
             }
         }
 
         // Update totals row
         rebuild_totals();
 
+        if (atLeastOneRunning) {
+            update_tasks_start_time();
+        }
         // Update pie charts
         if(timer_step >= Setting('chart-update-time', 3, true)) {
             rebuild_charts();
