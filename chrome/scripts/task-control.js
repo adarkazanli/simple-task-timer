@@ -101,9 +101,8 @@ function update_time() {
         // Update totals row
         rebuild_totals();
 
-        if (atLeastOneRunning) {
-            update_tasks_start_time();
-        }
+        update_tasks_start_time();
+
         // Update pie charts
         if(timer_step >= Setting('chart-update-time', 3, true)) {
             rebuild_charts();
