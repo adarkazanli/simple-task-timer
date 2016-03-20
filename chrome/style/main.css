@@ -228,3 +228,14 @@ tfoot td.text, tfoot td.current, tfoot td.goal, tfoot td.progress { font-weight:
 }
 
 #error-info { margin-bottom: 30px; }
+
+#start-time-set {
+    margin-top: 20px;
+    text-align: center;
+}
+#start-time-set input[type='time'] {
+    vertical-align: bottom;
+}
+#task-list .text  .time {
+    color: #999;
+}

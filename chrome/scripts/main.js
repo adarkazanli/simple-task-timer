@@ -197,6 +197,23 @@ $(function() {
         rebuild_charts();
         check_width();
         if(DEBUG) $('#debug').show();
+
+        //set default time for now
+        $('input[type="time"][value="now"]').each(function(){
+            var d = new Date(),
+              h = d.getHours(),
+              m = d.getMinutes(),
+              s = d.getSeconds();
+            if(h < 10) h = '0' + h;
+            if(m < 10) m = '0' + m;
+            if(s < 10) s = '0' + s;
+            $(this).attr({
+                'value': h + ':' + m + ':' + s
+            });
+        });
+
+        update_tasks_start_time();
+
     } catch(e) {
         js_error(e);
     }
@@ -216,6 +233,7 @@ function rebuild_list() {
     $('table#task-list').tableDnDUpdate();
     rebuild_totals();
     rebuild_charts();
+    update_tasks_start_time();
 }
 
 // Rebuild the totals row
@@ -412,3 +430,54 @@ function SaveTasks(timeout) {
     $('button.delete, #new-btn').removeAttr('disabled');
     if(timeout) load.hide();
 }
+
+function update_tasks_start_time() {
+    var start_time_str_arr = $('#input-start-time').val().split(':');
+    var start_time = new Date();
+    start_time.setHours(start_time_str_arr[0]);
+    start_time.setMinutes(start_time_str_arr[1]);
+    var task_start_time = start_time;
+    $('#task-list tbody tr').each(function(index, element) {
+        var task_text = $(element).find('td.text .task-name').text();
+        if ($(element).hasClass('done')) {
+            $(element).find('td.text').html(task_text + '<br><span class="time">done</span>');
+            return;
+        }
+        var task_start_time_h = task_start_time.getHours(),
+          task_start_time_m = task_start_time.getMinutes(),
+          task_start_time_s = task_start_time.getSeconds();
+        if(task_start_time_h < 10) task_start_time_h = '0' + task_start_time_h;
+        if(task_start_time_m < 10) task_start_time_m = '0' + task_start_time_m;
+        if(task_start_time_s < 10) task_start_time_s = '0' + task_start_time_s;
+
+        var task_time_str = task_start_time_h + ':' + task_start_time_m + ':' + task_start_time_s;
+
+        var time_spent_arr = $(element).find('td.current').text().split(':');
+        var goal_time_arr = $(element).find('td.goal').text().split(':');
+        var time_spent_date = new Date();
+        time_spent_date.setHours(time_spent_arr[0]);
+        time_spent_date.setMinutes(time_spent_arr[1]);
+        time_spent_date.setSeconds(time_spent_arr[2]);
+        var goal_date = new Date();
+        goal_date.setHours(goal_time_arr[0]);
+        goal_date.setMinutes(goal_time_arr[1]);
+        goal_date.setSeconds(goal_time_arr[2]);
+
+        var remain_time = goal_date-time_spent_date;
+        task_start_time.setTime(start_time.getTime() + remain_time);
+        task_time_str = task_time_str + ' - ';
+
+        task_start_time_h = task_start_time.getHours();
+        task_start_time_m = task_start_time.getMinutes();
+        task_start_time_s = task_start_time.getSeconds();
+        if(task_start_time_h < 10) task_start_time_h = '0' + task_start_time_h;
+        if(task_start_time_m < 10) task_start_time_m = '0' + task_start_time_m;
+        if(task_start_time_s < 10) task_start_time_s = '0' + task_start_time_s;
+        task_time_str = task_time_str + task_start_time_h + ':' + task_start_time_m + ':' + task_start_time_s;
+
+        $(element).find('td.text').html('<span class="task-name">' + task_text + '</span>' + '<br><span class="time">' + task_time_str+'</span>');
+    });
+}
+
+
+

@@ -63,7 +63,7 @@ $(function() {
 
         if($('#new-txt').val() != '' && (hours > 0 || mins > 0 || indef)) {
             // Add the task to the array
-            cancel_edit();
+
             add_task({
                 'text': $('#new-txt').val(),
                 'description': '',
@@ -76,7 +76,7 @@ $(function() {
                 'notified': false,
                 'settings': task_settings_checkboxes
             });
-
+            cancel_edit();
             // Start the task if the start checkbox is checked and save the tasks
             if($('#new-start').is(':checked')) toggle_task(task_count - 1);
             SaveTasks();
@@ -385,4 +385,6 @@ $(function() {
     $('#new-goal-mins').blur(function() {
         fix_time('#new-goal-hours', '#new-goal-mins');
     });
+
+    $('#input-start-time').change(update_tasks_start_time);
 });
