@@ -434,7 +434,7 @@ function update_tasks_start_time() {
     $('#task-list tbody tr').each(function(index, element) {
         var task_text = $(element).find('td.text .task-name').text();
         if ($(element).hasClass('done')) {
-            $(element).find('td.text').html(task_text + '<br><span class="time">done</span>');
+            $(element).find('td.text').html('<span class="task-name">' + task_text + '</span>' + '<br><span class="time">done</span>');
         } else {
             var task_start_time_h = task_start_time.getHours(),
               task_start_time_m = task_start_time.getMinutes(),
