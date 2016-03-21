@@ -239,3 +239,7 @@ tfoot td.text, tfoot td.current, tfoot td.goal, tfoot td.progress { font-weight:
 #task-list th.duration {
     display: inline-block;
 }
+#task-list td.duration {
+    font-size: 13px;
+    color: #999;
+}
