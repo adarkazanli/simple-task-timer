@@ -236,6 +236,6 @@ tfoot td.text, tfoot td.current, tfoot td.goal, tfoot td.progress { font-weight:
 #start-time-set input[type='time'] {
     vertical-align: bottom;
 }
-#task-list .text  .time {
-    color: #999;
+#task-list th.duration {
+    display: inline-block;
 }

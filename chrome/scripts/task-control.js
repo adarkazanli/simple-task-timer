@@ -245,7 +245,8 @@ function list_task(task, anim) {
         if(task_running[task]) $('#task-'+ task).addClass('running');
 
         // Text
-        $('#task-'+ task +' td.text').html('<span class="task-name">' + tasks[task].text + '</span>');
+        $('#task-'+ task +' td.text').text(tasks[task].text);
+        $('#task-'+ task +' td.duration').text('');
         $('#task-'+ task +' td.current').text(format_time(tasks[task].current_hours, tasks[task].current_mins, tasks[task].current_secs));
         $('#task-'+ task +' td.goal').text(format_time(tasks[task].goal_hours, tasks[task].goal_mins, 0, tasks[task].indefinite));
         $('#task-'+ task +' button.toggle').text(task_running[task] ? locale('btnStop') : locale('btnStart'));

@@ -417,9 +417,11 @@ function update_tasks_start_time() {
 
     var d = new Date(),
       h = d.getHours(),
-      m = d.getMinutes();
+      m = d.getMinutes(),
+      s = d.getSeconds();
     if(h < 10) h = '0' + h;
     if(m < 10) m = '0' + m;
+    if(s < 10) s = '0' + s;
     $('#input-start-time').val(h + ':' + m);
 
     var start_time_str_arr = $('#input-start-time').val().split(':');
@@ -431,10 +433,10 @@ function update_tasks_start_time() {
     start_time.setHours(start_time_str_arr[0]);
     start_time.setMinutes(start_time_str_arr[1]);
     var task_start_time = start_time;
+    var task_end_time_str = '';
     $('#task-list tbody tr').each(function(index, element) {
-        var task_text = $(element).find('td.text .task-name').text();
         if ($(element).hasClass('done')) {
-            $(element).find('td.text').html('<span class="task-name">' + task_text + '</span>' + '<br><span class="time">done</span>');
+            $(element).find('td.duration').text('done');
         } else {
             var task_start_time_h = task_start_time.getHours(),
               task_start_time_m = task_start_time.getMinutes(),
@@ -458,7 +460,7 @@ function update_tasks_start_time() {
 
             var remain_time = goal_date-time_spent_date;
             task_start_time.setTime(start_time.getTime() + remain_time);
-            task_time_str = task_time_str + ' - ';
+            task_time_str = task_time_str;
 
             task_start_time_h = task_start_time.getHours();
             task_start_time_m = task_start_time.getMinutes();
@@ -466,11 +468,14 @@ function update_tasks_start_time() {
             if(task_start_time_h < 10) task_start_time_h = '0' + task_start_time_h;
             if(task_start_time_m < 10) task_start_time_m = '0' + task_start_time_m;
             if(task_start_time_s < 10) task_start_time_s = '0' + task_start_time_s;
-            task_time_str = task_time_str + task_start_time_h + ':' + task_start_time_m + ':' + task_start_time_s;
-
-            $(element).find('td.text').html('<span class="task-name">' + task_text + '</span>' + '<br><span class="time">' + task_time_str+'</span>');
+            task_end_time_str = task_start_time_h + ':' + task_start_time_m + ':' + task_start_time_s;
+            task_time_str = task_time_str + ' - ' + task_end_time_str;
+            $(element).find('td.duration').text(task_time_str);
         }
     });
+
+    var start_time_str = h + ':' + m + ':' + s;
+    $('#task-list tfoot tr .duration').text(start_time_str + ' - ' + task_end_time_str);
 }
 
 

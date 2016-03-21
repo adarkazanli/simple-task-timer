@@ -71,6 +71,10 @@
 	"lblTask": {
 		"message": "Task"
 	},
+	"lblDuration": {
+		"message": "Duration",
+		"description": "Column header - Duration"
+	},
 	"lblTimeSpent": {
 		"message": "Time Spent"
 	},
