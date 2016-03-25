@@ -424,15 +424,18 @@ function update_tasks_start_time() {
     if(s < 10) s = '0' + s;
     $('#input-start-time').val(h + ':' + m);
 
+    var offsetHour = $('#input-offset-time-hour').val();
+    var offsetMins = $('#input-offset-time-mins').val();
+    !offsetHour || isNaN(offsetHour) ? offsetHour = 0 : offsetHour = parseInt(offsetHour);
+    !offsetMins || isNaN(offsetMins) ? offsetMins = 0 : offsetMins = parseInt(offsetMins);
+
     var start_time_str_arr = $('#input-start-time').val().split(':');
-    if (start_time_str_arr.length == 1) return;
-    if (start_time_str_arr.length == 2) {
-        start_time_str_arr[2]  = '00';
-    }
     var start_time = new Date();
     start_time.setHours(start_time_str_arr[0]);
     start_time.setMinutes(start_time_str_arr[1]);
     var task_start_time = start_time;
+    task_start_time.setMinutes(start_time.getMinutes() + offsetMins);
+    task_start_time.setHours(start_time.getHours() + offsetHour);
     var task_end_time_str = '';
     $('#task-list tbody tr').each(function(index, element) {
         if ($(element).hasClass('done')) {
@@ -476,6 +479,7 @@ function update_tasks_start_time() {
 
     var start_time_str = h + ':' + m + ':' + s;
     $('#task-list tfoot tr .duration').text(start_time_str + ' - ' + task_end_time_str);
+
 }
 
 
